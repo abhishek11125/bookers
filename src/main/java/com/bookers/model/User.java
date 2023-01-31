@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +25,10 @@ public class User {
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
+    //wishlist
+    private Stack<Book> wishList = new Stack<>();
+    //payment details
+    private List<Payment> payments = new ArrayList<>();
 
     public User(String userName, String gender, String email, String mobile, String password) {
         this.userName = userName;

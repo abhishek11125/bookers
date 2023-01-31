@@ -3,6 +3,9 @@ package com.bookers.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +21,8 @@ public class Author {
     private String email;
     private String mobile;
     private String password;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookId")
-    private Book book;
+   @OneToMany(mappedBy = "author")
+    private List<Book> books = new ArrayList<>();
 
     public Author(String authorName, String gender, String email, String mobile, String password) {
         this.authorName = authorName;

@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,14 +22,15 @@ public class Book {
     private String title;
     private String publisher;
     private LocalDate publicationDate;
-    private double price;
     private Integer noOfPages;
     private String language;
     private Integer edition;
+    private String literatureType;
+    private double price;
 
-    @OneToMany(mappedBy = "book")
-    private List<Author> authors = new ArrayList<>();
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Author author;
+    @ManyToOne
     private List<User> users = new ArrayList<>();
 
 }
