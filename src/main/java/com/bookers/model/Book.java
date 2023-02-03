@@ -6,7 +6,6 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,8 +27,6 @@ public class Book {
     private String literatureType;
     private double price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Author author;
     @ManyToOne
     private List<User> users = new ArrayList<>();
 
