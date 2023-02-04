@@ -43,6 +43,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
+    //login exception handler
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<MyErrorDetails> logInExceptionHandler(LoginException le, WebRequest req){
+        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),le.getMessage(),req.getDescription(false));
+
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
     //no handler exception handler
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<MyErrorDetails> noHandlerFoundExceptionHandler(NoHandlerFoundException ne, WebRequest req){

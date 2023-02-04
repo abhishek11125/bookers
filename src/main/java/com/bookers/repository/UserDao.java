@@ -1,4 +1,4 @@
-package com.bookers.dao;
+package com.bookers.repository;
 
 import com.bookers.exception.UserException;
 import com.bookers.model.User;

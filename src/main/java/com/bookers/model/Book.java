@@ -1,6 +1,6 @@
 package com.bookers.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -28,6 +28,9 @@ public class Book {
     private double price;
 
     @ManyToOne
-    private List<User> users = new ArrayList<>();
+    private User user;
+
+    @ManyToOne
+    private Payment payment;
 
 }

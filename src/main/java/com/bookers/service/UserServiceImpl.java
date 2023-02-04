@@ -1,13 +1,14 @@
 package com.bookers.service;
 
-import com.bookers.dao.UserDao;
+import com.bookers.repository.UserDao;
 import com.bookers.exception.UserException;
 import com.bookers.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDao userDao;
