@@ -1,10 +1,13 @@
 package com.bookers.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -14,7 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
-    private String userName;
+    private String name;
     private String gender;
     @Column(unique = true)
     private String email;
@@ -24,18 +27,16 @@ public class User {
 
     private String role;
 
-//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-//    private List<Book> books = new ArrayList<>();
-//    //wishlist
-//    private Stack<Book> wishList = new Stack<>();
-//    //payment details
-//    private List<Payment> payments = new ArrayList<>();
+    //Buyer books list
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Book> buyerBooks = new ArrayList<>();
 
-    public User(String userName, String gender, String email, String mobile, String password) {
-        this.userName = userName;
-        this.gender = gender;
-        this.email = email;
-        this.mobile = mobile;
-        this.password = password;
-    }
+    //Buyer payment details
+    @OneToMany(mappedBy = "user")
+    private List<Payment> buyerPayments = new ArrayList<>();
+
+    //Author books list
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    List<Book> authorBooks = new ArrayList<>();
+
 }
