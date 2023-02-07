@@ -23,9 +23,8 @@ public class UserLoginServiceImpl implements UserLoginService{
 
     @Override
     public String logIntoAccount(UserLoginDTO userLoginDTO) throws LoginException {
-        Optional<User> opt = userDao.findByEmail(userLoginDTO.getEmail());
+        User existingUser = userDao.findByEmail(userLoginDTO.getEmail());
 
-        User existingUser  = opt.get();
         if (existingUser==null) throw new LoginException("Incorrect Username");
 
         Optional<UserCurrentSession> opt1 = userSessionDao.findById(existingUser.getUserId());
@@ -36,7 +35,7 @@ public class UserLoginServiceImpl implements UserLoginService{
             String key = RandomString.make(6);
             UserCurrentSession userCurrentSession = new UserCurrentSession(existingUser.getUserId(),key,LocalDateTime.now());
             userSessionDao.save(userCurrentSession);
-            return userCurrentSession.getUserKey();
+            return userCurrentSession.getUid();
         }else {
             throw new LoginException("Please enter valid password");
         }
@@ -44,7 +43,7 @@ public class UserLoginServiceImpl implements UserLoginService{
 
     @Override
     public String logOutFromAccount(String key) throws LoginException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUserKey(key);
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if (userCurrentSession==null) throw new LoginException("User not logged in");
 
