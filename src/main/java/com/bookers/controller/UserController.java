@@ -29,9 +29,9 @@ public class UserController {
 
            return new ResponseEntity<>(user,HttpStatus.OK);
     }
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsersHandler(){
-        List<User> users =  userService.getAllUsers();
+    @GetMapping("/users/{key}")
+    public ResponseEntity<List<User>> getAllUsersHandler(@PathVariable("key") String key){
+        List<User> users =  userService.getAllUsers(key);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 }

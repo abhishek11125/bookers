@@ -34,6 +34,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
+    //access exception
+    @ExceptionHandler(AccessDenied.class)
+    public ResponseEntity<MyErrorDetails> authorExceptionHandler(AccessDenied ad, WebRequest req){
+        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),ad.getMessage(),req.getDescription(false));
+
+        return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
+    }
 
     //generic exception handler
     @ExceptionHandler(Exception.class)
