@@ -1,6 +1,7 @@
 package com.bookers.controller;
 
 import com.bookers.exception.UserException;
+import com.bookers.model.Book;
 import com.bookers.model.User;
 import com.bookers.repository.UserDao;
 import com.bookers.service.UserService;
@@ -33,5 +34,21 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsersHandler(@PathVariable("key") String key){
         List<User> users =  userService.getAllUsers(key);
         return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+    @PostMapping("/addbook/{key}")
+    public ResponseEntity<Book> addBookHandler(@RequestBody Book book ,@PathVariable("key") String key){
+           Book book1 =  userService.addBook(book, key);
+           return new ResponseEntity<>(book1,HttpStatus.ACCEPTED);
+    }
+    @GetMapping("bookbytitle/{title}/{key}")
+    public ResponseEntity<List<Book>> getBookByTitleHandler(@PathVariable String title, @PathVariable String key){
+        List<Book> books = userService.getBookByTitle(title,key);
+        return new ResponseEntity<>(books,HttpStatus.OK);
+    }
+
+    @GetMapping("bookbyauthor/{name}/{key}")
+    public ResponseEntity<List<Book>> getBookByAuthorHandler(@PathVariable String name, @PathVariable String key){
+        List<Book> books = userService.getBookByAuthorName(name,key);
+        return new ResponseEntity<>(books,HttpStatus.OK);
     }
 }

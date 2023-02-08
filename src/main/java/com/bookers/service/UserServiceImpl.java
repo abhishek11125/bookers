@@ -1,9 +1,10 @@
 package com.bookers.service;
 
-import com.bookers.exception.AccessDenied;
+import com.bookers.exception.*;
+import com.bookers.model.Book;
 import com.bookers.model.UserCurrentSession;
+import com.bookers.repository.BookDao;
 import com.bookers.repository.UserDao;
-import com.bookers.exception.UserException;
 import com.bookers.model.User;
 import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private BookDao bookDao;
     @Autowired
     private UserSessionDao userSessionDao;
     @Override
@@ -30,12 +33,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUsers(String key) throws UserException, AccessDenied {
+    public List<User> getAllUsers(String key) throws LoginException, AccessDenied {
         UserCurrentSession userCurrentSession =  userSessionDao.findByUid(key);
 
         Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
 
-        if (opt.isEmpty()) throw new UserException("Please login");
+        if (opt.isEmpty()) throw new LoginException("Please Login");
         User user = opt.get();
 
         if(user.getRole().equalsIgnoreCase("Admin")){
@@ -44,4 +47,51 @@ public class UserServiceImpl implements UserService{
         }else throw new AccessDenied("Not Authorized");
 
     }
+
+    @Override
+    public Book addBook(Book book, String key) throws LoginException, AccessDenied {
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+
+       Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+
+       if(opt.isEmpty()) throw new LoginException("Please Login");
+       User user = opt.get();
+
+       if(user.getRole().equalsIgnoreCase("Author")){
+               Book book1 = bookDao.save(book);
+               book1.setAuthorName(user.getName());
+               return book1;
+       }
+       throw new AccessDenied("Not Authorized");
+    }
+
+    @Override
+    public List<Book> getBookByTitle(String title, String key) throws LoginException, BookException {
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+
+        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+
+        if(opt.isEmpty()) throw new LoginException("Please Login");
+
+           List<Book> books =  bookDao.findByTitle(title);
+
+           if(books.isEmpty()) throw new BookException("Book not found with title: "+title);
+
+           return books;
+    }
+
+    @Override
+    public List<Book> getBookByAuthorName(String name, String key) throws LoginException, AuthorException {
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+
+        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+
+        if(opt.isEmpty()) throw new LoginException("Please Login");
+
+         List<Book> books =  bookDao.findByAuthorName(name);
+
+         if(books.isEmpty()) throw new AuthorException("Book not found with author name "+name);
+         return books;
+    }
+
 }
