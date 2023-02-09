@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface BookDao extends JpaRepository<Book,Integer> {
-    //find by title and author methods to be implemented.
 
     public List<Book> findByTitle(String title)throws BookException;
 
     public List<Book> findByAuthorName(String name)throws AuthorException;
+
 }
