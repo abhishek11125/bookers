@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserSessionDao userSessionDao;
     @Override
-    public User registerUser(@Valid User user) {
+    public User registerUser(User user) {
         return userDao.save(user);
     }
 
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateMobile(@Valid String mobile, String key) throws LoginException {
+    public User updateMobile(String mobile, String key) throws LoginException {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updatePassword(@Valid String email, String newPass, String key) {
+    public User updatePassword(String email, String newPass, String key) {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");

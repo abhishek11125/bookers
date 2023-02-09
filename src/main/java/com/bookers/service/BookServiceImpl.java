@@ -11,11 +11,12 @@ import com.bookers.repository.BookDao;
 import com.bookers.repository.UserDao;
 import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class BookServiceImpl implements BookService{
     @Autowired
     private BookDao bookDao;
@@ -25,7 +26,7 @@ public class BookServiceImpl implements BookService{
     private UserSessionDao userSessionDao;
 
     @Override
-    public Book addBook(@Valid Book book, String key) throws LoginException, AccessDenied {
+    public Book addBook(Book book, String key) throws LoginException, AccessDenied {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
