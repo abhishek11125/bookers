@@ -35,27 +35,6 @@ public class UserController {
         List<User> users =  userService.getAllUsers(key);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
-    @PostMapping("/addbook/{key}")
-    public ResponseEntity<Book> addBookHandler(@RequestBody Book book ,@PathVariable("key") String key){
-           Book book1 =  userService.addBook(book, key);
-           return new ResponseEntity<>(book1,HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/bookbytitle/{title}/{key}")
-    public ResponseEntity<List<Book>> getBookByTitleHandler(@PathVariable String title, @PathVariable String key){
-        List<Book> books = userService.getBookByTitle(title,key);
-        return new ResponseEntity<>(books,HttpStatus.OK);
-    }
-
-    @GetMapping("/bookbyauthor/{name}/{key}")
-    public ResponseEntity<List<Book>> getBookByAuthorHandler(@PathVariable String name, @PathVariable String key){
-        List<Book> books = userService.getBookByAuthorName(name,key);
-        return new ResponseEntity<>(books,HttpStatus.OK);
-    }
-    @GetMapping("/allbooks/{key}")
-    public ResponseEntity<List<Book>> getAllBooksHandler( @PathVariable String key){
-        List<Book> books = userService.getAllBooks(key);
-        return new ResponseEntity<>(books,HttpStatus.OK);
-    }
     @PutMapping("/updatemobile/{mobile}/{key}")
     public ResponseEntity<User> updateMobileHandler(@PathVariable("mobile") String mobile,@PathVariable("key") String key){
         User user = userService.updateMobile(mobile,key);
@@ -73,12 +52,6 @@ public class UserController {
     public ResponseEntity<User> getProfileHandler(@PathVariable("key") String key){
         User user =  userService.getProfile(key);
         return new ResponseEntity<>(user,HttpStatus.OK);
-    }
-    @DeleteMapping("/removebook/{bookid}/{key}")
-    public ResponseEntity<Book> removeBookHandler(@PathVariable("bookid") Integer bookId,@PathVariable("key") String key){
-
-        Book book = userService.removeBook(bookId,key);
-        return new ResponseEntity<>(book,HttpStatus.OK);
     }
 
 }

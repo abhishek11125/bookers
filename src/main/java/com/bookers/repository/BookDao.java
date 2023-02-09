@@ -15,4 +15,5 @@ public interface BookDao extends JpaRepository<Book,Integer> {
 
     public List<Book> findByAuthorName(String name)throws AuthorException;
 
+    public List<Book> findByLanguage(String language)throws BookException;
 }
