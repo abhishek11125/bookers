@@ -21,4 +21,11 @@ public interface UserService {
 
     public List<Book> getBookByAuthorName(String name, String key) throws LoginException, AuthorException;
 
+    public List<Book> getAllBooks(String key)throws BookException,LoginException;
+
+    public User updateMobile(String mobile, String key)throws LoginException;
+
+    public User updatePassword(String email, String newPass, String key);
+
+    public User getProfile(String key) throws LoginException;
 }
