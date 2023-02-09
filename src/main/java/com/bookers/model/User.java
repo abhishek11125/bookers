@@ -1,5 +1,6 @@
 package com.bookers.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -29,14 +30,17 @@ public class User {
 
     //Buyer books list
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Book> buyerBooks = new ArrayList<>();
 
     //Buyer payment details
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Payment> buyerPayments = new ArrayList<>();
 
     //Author books list
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     List<Book> authorBooks = new ArrayList<>();
 
 }
