@@ -10,6 +10,7 @@ import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserSessionDao userSessionDao;
     @Override
-    public User registerUser(User user) {
+    public User registerUser(@Valid User user) {
         return userDao.save(user);
     }
 
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Book addBook(Book book, String key) throws LoginException, AccessDenied {
+    public Book addBook(@Valid Book book, String key) throws LoginException, AccessDenied {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
        if(userCurrentSession==null) throw new LoginException("Please Login");
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateMobile(String mobile, String key) throws LoginException {
+    public User updateMobile(@Valid String mobile, String key) throws LoginException {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
@@ -124,7 +125,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updatePassword(String email, String newPass, String key) {
+    public User updatePassword(@Valid String email, String newPass, String key) {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
@@ -148,6 +149,25 @@ public class UserServiceImpl implements UserService{
         User user = opt.get();
 
         return user;
+    }
+
+    @Override
+    public Book removeBook(Integer bookId, String key) throws LoginException, BookException, AccessDenied {
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+        if(userCurrentSession==null) throw new LoginException("Please Login");
+
+        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+
+        User user = opt.get();
+
+        if(user.getRole().equalsIgnoreCase("Author")){
+                Optional<Book> opt1 = bookDao.findById(bookId);
+                if(opt1.isEmpty()) throw new BookException("Book not found with book id "+bookId);
+                Book book = opt1.get();
+
+              bookDao.delete(book);
+              return book;
+        }else throw new AccessDenied("Not Authorized");
     }
 
 }

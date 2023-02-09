@@ -28,4 +28,6 @@ public interface UserService {
     public User updatePassword(String email, String newPass, String key);
 
     public User getProfile(String key) throws LoginException;
+
+    public Book removeBook(Integer bookId, String key)throws LoginException,BookException,AccessDenied;
 }

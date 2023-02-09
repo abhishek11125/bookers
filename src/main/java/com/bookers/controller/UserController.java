@@ -74,5 +74,11 @@ public class UserController {
         User user =  userService.getProfile(key);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+    @DeleteMapping("/removebook/{bookid}/{key}")
+    public ResponseEntity<Book> removeBookHandler(@PathVariable("bookid") Integer bookId,@PathVariable("key") String key){
+
+        Book book = userService.removeBook(bookId,key);
+        return new ResponseEntity<>(book,HttpStatus.OK);
+    }
 
 }
