@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUserHandler(@RequestBody  User user){
+    public ResponseEntity<User> registerUserHandler(@Valid @RequestBody  User user){
        User user1 = userService.registerUser(user);
         return new ResponseEntity<>(user1, HttpStatus.ACCEPTED);
     }
@@ -36,13 +37,13 @@ public class UserController {
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
     @PutMapping("/updatemobile/{mobile}/{key}")
-    public ResponseEntity<User> updateMobileHandler(@PathVariable("mobile") String mobile,@PathVariable("key") String key){
+    public ResponseEntity<User> updateMobileHandler(@Valid @PathVariable("mobile") String mobile,@PathVariable("key") String key){
         User user = userService.updateMobile(mobile,key);
 
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
     @PutMapping("/updatepassword/{email}/{newpass}/{key}")
-    public ResponseEntity<User> updatePasswordHandler(@PathVariable("email") String email,@PathVariable("newpass") String newPassword, @PathVariable("key") String  key){
+    public ResponseEntity<User> updatePasswordHandler(@Valid @PathVariable("email") String email,@PathVariable("newpass") String newPassword, @PathVariable("key") String  key){
         User user = userService.updatePassword(email,newPassword,key);
 
         return new ResponseEntity<>(user,HttpStatus.OK);

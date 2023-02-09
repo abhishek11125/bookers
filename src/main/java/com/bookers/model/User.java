@@ -3,6 +3,7 @@ package com.bookers.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -30,7 +31,7 @@ public class User {
     @Email
     @NotBlank(message = "Email can not be blank")
     private String email;
-    @Size(max = 10,message = "Please provide minimum 10 digit mobile number")
+    @Size(min = 10,max = 10,message = "Please provide minimum 10 digit mobile number")
     @NotBlank(message = "Mobile can not be blank")
     private String mobile;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -38,6 +39,8 @@ public class User {
     private String password;
     @NotBlank(message = "Role can not be blank")
     private String role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Address> addresses = new ArrayList<>();
 
     //Buyer books list
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
@@ -53,5 +56,13 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     List<Book> authorBooks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToOne
+    private Cart cart;
+
 
 }

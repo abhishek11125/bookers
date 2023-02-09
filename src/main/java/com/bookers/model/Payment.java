@@ -25,4 +25,5 @@ public class Payment {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
+
 }
