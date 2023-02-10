@@ -8,5 +8,7 @@ import com.bookers.repository.CartDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public interface CartService {
-    public String addBookToCart(Book book, String key)throws BookException, AccessDenied, LoginException;
+    public Book addBookToCart(Book book, String key)throws AccessDenied, LoginException;
+
+    public String removeBookFromCart(Book book,String key)throws AccessDenied,LoginException;
 }

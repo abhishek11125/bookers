@@ -2,6 +2,7 @@ package com.bookers.service;
 
 import com.bookers.exception.*;
 import com.bookers.model.Book;
+import com.bookers.model.Cart;
 import com.bookers.model.UserCurrentSession;
 import com.bookers.repository.BookDao;
 import com.bookers.repository.UserDao;
@@ -23,6 +24,11 @@ public class UserServiceImpl implements UserService{
     private UserSessionDao userSessionDao;
     @Override
     public User registerUser(User user) {
+        if(user.getRole().equalsIgnoreCase("Buyer")) {
+            Cart cart = new Cart();
+            user.setCart(cart);
+            cart.setUser(user);
+        }
         return userDao.save(user);
     }
 

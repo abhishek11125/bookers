@@ -1,5 +1,6 @@
 package com.bookers.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,9 +13,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cartId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @JsonIgnore
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Book> books = new ArrayList<>();
+    private List<Book> book = new ArrayList<>();
 }

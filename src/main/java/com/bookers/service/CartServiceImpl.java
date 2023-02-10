@@ -14,9 +14,10 @@ import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
     @Autowired
     private CartDao cartDao;
     @Autowired
@@ -28,28 +29,30 @@ public class CartServiceImpl implements CartService{
 
 
     @Override
-    public String addBookToCart(Book book, String key) throws BookException, AccessDenied, LoginException {
+    public Book addBookToCart(Book book, String key) throws AccessDenied, LoginException {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
-        if(userCurrentSession==null) throw new LoginException("Please Login");
+        if (userCurrentSession == null) throw new LoginException("Please Login");
 
-        Optional<User> opt= userDao.findById(userCurrentSession.getUserId());
-
-        Optional<Book> opt1 = bookDao.findById(book.getBookId());
-
-        Cart cart = new Cart();
-        Book book1 = opt1.get();
-
-        book1.setCart(cart);
+        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
 
         User user = opt.get();
-        cart.getBooks().add(book1);
+        if (user.getRole().equalsIgnoreCase("Buyer")) {
+            Optional<Book> opt1 = bookDao.findById(book.getBookId());
 
-        user.setCart(cart);
-        cart.setUser(user);
-
-        cartDao.save(cart);
-        bookDao.save(book1);
-        return "Book successfully added to cart";
+            Cart cart = user.getCart();
+            cart.getBook().add(book);
+            cartDao.save(cart);
+            return book;
+        } else {
+            throw new AccessDenied("Not Authorized");
+        }
     }
+
+    @Override
+    public String removeBookFromCart(Book book, String key) throws AccessDenied, LoginException {
+        return null;
+    }
+
 }
+

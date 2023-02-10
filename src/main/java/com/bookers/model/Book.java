@@ -55,9 +55,6 @@ public class Book {
     private Payment payment;
 
     @ManyToOne
-    private Cart cart;
-
-    @ManyToOne
     private Order order;
 
 }
