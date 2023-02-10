@@ -11,8 +11,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cartId;
-    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 }
