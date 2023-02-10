@@ -1,6 +1,8 @@
 package com.bookers.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -21,9 +23,11 @@ public class Payment {
     private Integer quantity;
 
     @OneToMany(mappedBy = "payment",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private User user;
 
 }
