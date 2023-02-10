@@ -37,6 +37,10 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{5,15}$",message = "Password must be of min 5 and max 15 character and includes at least one uppercase,lowercase,symbols and numbers from 0 to 9")
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
+    private Cart cart;
+
     @NotBlank(message = "Role can not be blank")
     private String role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
@@ -61,8 +65,6 @@ public class User {
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
-    @OneToOne
-    private Cart cart;
 
 
 }

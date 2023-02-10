@@ -51,9 +51,16 @@ public class BookController {
         return new ResponseEntity<>(book,HttpStatus.OK);
     }
     @PostMapping("/addtocart/{key}")
-    public ResponseEntity<String> addBookToCartHandler(@RequestBody Book book,@PathVariable("key") String key){
-       String message = cartService.addBookToCart(book,key);
+    public ResponseEntity<Book> addBookToCartHandler(@RequestBody Book book,@PathVariable("key") String key){
+       Book book1 = cartService.addBookToCart(book,key);
 
-       return new ResponseEntity<>(message,HttpStatus.OK);
+       return new ResponseEntity<>(book1,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/removefromcart/{key}")
+    public ResponseEntity<String> removeFromCartHandler(@RequestBody Book book,@PathVariable("key") String key){
+       String message =  cartService.removeBookFromCart(book, key);
+
+        return new ResponseEntity<>(message,HttpStatus.OK);
     }
 }
