@@ -2,6 +2,7 @@ package com.bookers.controller;
 
 import com.bookers.model.Book;
 import com.bookers.service.BookService;
+import com.bookers.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import java.util.List;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private CartService cartService;
 
     @PostMapping("/addbook/{key}")
     public ResponseEntity<Book> addBookHandler(@Valid @RequestBody Book book , @PathVariable("key") String key){
@@ -46,5 +49,11 @@ public class BookController {
 
         Book book = bookService.removeBook(bookId,key);
         return new ResponseEntity<>(book,HttpStatus.OK);
+    }
+    @PostMapping("/addtocart/{key}")
+    public ResponseEntity<String> addBookToCartHandler(@RequestBody Book book,@PathVariable("key") String key){
+       String message = cartService.addBookToCart(book,key);
+
+       return new ResponseEntity<>(message,HttpStatus.OK);
     }
 }
