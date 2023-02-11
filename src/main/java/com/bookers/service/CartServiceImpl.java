@@ -1,7 +1,6 @@
 package com.bookers.service;
 
 import com.bookers.exception.AccessDenied;
-import com.bookers.exception.BookException;
 import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
 import com.bookers.model.Cart;
@@ -51,7 +50,36 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String removeBookFromCart(Book book, String key) throws AccessDenied, LoginException {
-        return null;
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+
+        if (userCurrentSession == null) throw new LoginException("Please Login");
+
+        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+
+        int bookId = book.getBookId();
+        int userId = userCurrentSession.getUserId();
+
+          Optional<User> opt1 =  userDao.findById(userId);
+
+          User user = opt1.get();
+
+          int cartId = user.getCart().getCartId();
+
+          Optional<Cart> opt2 = cartDao.findById(cartId);
+
+          Cart cart = opt2.get();
+
+          List<Book> books = cart.getBook();
+          String message = "Book removal failed";
+          for(Integer i=0; i<books.size(); i++) {
+              if (books.get(i).getBookId() == bookId) {
+                  books.remove(i);
+                  message = "Book removed from cart successfully";
+              }
+          }
+        System.out.println(books);
+          cartDao.save(cart);
+        return message;
     }
 
 }

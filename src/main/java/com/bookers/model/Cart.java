@@ -18,5 +18,6 @@ public class Cart {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
     private List<Book> book = new ArrayList<>();
 }

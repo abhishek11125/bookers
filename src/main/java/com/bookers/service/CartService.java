@@ -10,5 +10,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface CartService {
     public Book addBookToCart(Book book, String key)throws AccessDenied, LoginException;
 
-    public String removeBookFromCart(Book book,String key)throws AccessDenied,LoginException;
+    public String  removeBookFromCart(Book book,String key)throws AccessDenied,LoginException;
 }

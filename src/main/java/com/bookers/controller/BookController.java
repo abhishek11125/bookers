@@ -59,7 +59,7 @@ public class BookController {
 
     @DeleteMapping("/removefromcart/{key}")
     public ResponseEntity<String> removeFromCartHandler(@RequestBody Book book,@PathVariable("key") String key){
-       String message =  cartService.removeBookFromCart(book, key);
+       String message =  cartService.removeBookFromCart(book,key);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
