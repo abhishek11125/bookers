@@ -29,7 +29,7 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Book addBookToCart(Book book, String key) throws AccessDenied, LoginException {
+    public Book addBookToCart(Book book, String key) throws AccessDenied, LoginException,BookException {
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if (userCurrentSession == null) throw new LoginException("Please Login");
@@ -39,7 +39,7 @@ public class CartServiceImpl implements CartService {
         User user = opt.get();
         if (user.getRole().equalsIgnoreCase("Buyer")) {
             Optional<Book> opt1 = bookDao.findById(book.getBookId());
-
+            if(opt1.isEmpty())throw new BookException("Book not found");
             Cart cart = user.getCart();
             cart.getBook().add(book);
             cartDao.save(cart);
