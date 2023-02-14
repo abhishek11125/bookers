@@ -35,8 +35,8 @@ public class BookServiceImpl implements BookService{
         User user = opt.get();
 
         if(user.getRole().equalsIgnoreCase("Author")){
+            book.setAuthorName(user.getName());
             Book book1 = bookDao.save(book);
-            book1.setAuthorName(user.getName());
             return book1;
         }
         throw new AccessDenied("Not Authorized");

@@ -63,4 +63,9 @@ public class BookController {
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
+    @GetMapping("/cartbooks/{key}")
+    public ResponseEntity<List<Book>> getBooksFromCartHandler(@PathVariable String key){
+          List<Book> cartBooks =   cartService.getBooksInCart(key);
+          return new ResponseEntity<>(cartBooks,HttpStatus.OK);
+    }
 }
