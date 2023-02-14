@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public interface CartService {
-    public Book addBookToCart(Book book, String key)throws AccessDenied, LoginException;
+    public Book addBookToCart(Book book, String key)throws AccessDenied, LoginException,BookException;
 
     public String  removeBookFromCart(Book book,String key)throws AccessDenied,LoginException;
 
