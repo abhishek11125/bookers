@@ -18,6 +18,7 @@ public class Payment {
     private Integer paymentId;
     private LocalDateTime timeStamp;
     private boolean status;
+
     @NotBlank(message = "Please provide quantity to be purchased")
     @Min(value = 0,message = "Quantity can not be negative")
     private Integer quantity;
