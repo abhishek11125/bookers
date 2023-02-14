@@ -43,6 +43,7 @@ public class User {
 
     @NotBlank(message = "Role can not be blank")
     private String role;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
