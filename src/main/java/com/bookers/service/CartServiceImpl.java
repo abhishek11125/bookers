@@ -1,6 +1,7 @@
 package com.bookers.service;
 
 import com.bookers.exception.AccessDenied;
+import com.bookers.exception.BookException;
 import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
 import com.bookers.model.Cart;
@@ -57,11 +58,8 @@ public class CartServiceImpl implements CartService {
         Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
 
         int bookId = book.getBookId();
-        int userId = userCurrentSession.getUserId();
 
-          Optional<User> opt1 =  userDao.findById(userId);
-
-          User user = opt1.get();
+          User user = opt.get();
 
           int cartId = user.getCart().getCartId();
 
@@ -70,16 +68,30 @@ public class CartServiceImpl implements CartService {
           Cart cart = opt2.get();
 
           List<Book> books = cart.getBook();
-          String message = "Book removal failed";
-          for(Integer i=0; i<books.size(); i++) {
-              if (books.get(i).getBookId() == bookId) {
-                  books.remove(i);
-                  message = "Book removed from cart successfully";
-              }
-          }
-        System.out.println(books);
-          cartDao.save(cart);
+        books.stream().filter(book1 ->book1.getBookId().equals(bookId)).findFirst().ifPresent(books::remove);
+       String message = "Book removed from cart successfully";
+       cartDao.save(cart);
         return message;
+    }
+
+    @Override
+    public List<Book> getBooksInCart(String key) throws LoginException, BookException, AccessDenied {
+        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+
+        if (userCurrentSession == null) throw new LoginException("Please Login");
+
+        int userId = userCurrentSession.getUserId();
+
+        Optional<User> opt =  userDao.findById(userId);
+
+        User user = opt.get();
+
+        List<Book> cartBooks = user.getCart().getBook();
+
+        if(cartBooks.isEmpty()) throw new BookException("Cart is empty");
+
+        return cartBooks;
+
     }
 
 }
