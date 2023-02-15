@@ -62,7 +62,7 @@ public class UserController {
 
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }
-    @DeleteMapping("cancelorder/orderid/{key}")
+    @DeleteMapping("cancelorder/{orderid}/{key}")
     public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") String key){
         Order order = userService.cancelOrder(orderId, key);
         return new ResponseEntity<>(order,HttpStatus.OK);
