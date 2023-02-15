@@ -28,6 +28,7 @@ public class Address {
     private String pinCode;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "address")
