@@ -1,5 +1,6 @@
 package com.bookers.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,12 +26,15 @@ public class Order {
     private double totalAmount;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Address address;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @JsonIgnore
     List<Book> books = new ArrayList<>();
 
     @OneToOne

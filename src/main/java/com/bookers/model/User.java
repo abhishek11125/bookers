@@ -62,7 +62,6 @@ public class User {
     List<Book> authorBooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
 
