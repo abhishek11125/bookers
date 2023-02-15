@@ -2,6 +2,7 @@ package com.bookers.controller;
 
 import com.bookers.exception.UserException;
 import com.bookers.model.Book;
+import com.bookers.model.Order;
 import com.bookers.model.User;
 import com.bookers.repository.UserDao;
 import com.bookers.service.UserService;
@@ -53,6 +54,18 @@ public class UserController {
     public ResponseEntity<User> getProfileHandler(@PathVariable("key") String key){
         User user =  userService.getProfile(key);
         return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/{key}")
+    public ResponseEntity<List<Order>> getPlacedOrdersHandler(@PathVariable("key")String key){
+        List<Order> orders = userService.getOrderHistory(key);
+
+        return new ResponseEntity<>(orders,HttpStatus.OK);
+    }
+    @DeleteMapping("cancelorder/orderid/{key}")
+    public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") String key){
+        Order order = userService.cancelOrder(orderId, key);
+        return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
 }

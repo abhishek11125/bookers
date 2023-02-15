@@ -2,6 +2,7 @@ package com.bookers.service;
 
 import com.bookers.exception.*;
 import com.bookers.model.Book;
+import com.bookers.model.Order;
 import com.bookers.model.User;
 import com.bookers.model.UserCurrentSession;
 
@@ -21,4 +22,7 @@ public interface UserService {
 
     public User getProfile(String key) throws LoginException;
 
+    public List<Order> getOrderHistory(String key)throws LoginException,BookException;
+
+    public Order cancelOrder(Integer orderId,String key)throws LoginException,OrderException;
 }

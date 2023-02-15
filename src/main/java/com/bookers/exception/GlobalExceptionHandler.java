@@ -42,6 +42,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity<MyErrorDetails> authorExceptionHandler(OrderException oe, WebRequest req){
+        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),oe.getMessage(),req.getDescription(false));
+
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
     //generic exception handler
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MyErrorDetails> genericExceptionHandler(Exception e, WebRequest req){
