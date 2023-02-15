@@ -3,6 +3,8 @@ package com.bookers.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,15 +17,20 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
-    private LocalDateTime timeStamp;
+    @NotNull
+    private LocalDate date;
+    @NotBlank
     private String orderStatus;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Address address;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @OneToOne
-    private Payment payment;
-
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     List<Book> books = new ArrayList<>();
+
+    @OneToOne
+    private Payment payment;
 }
