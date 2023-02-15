@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService{
         order.setTotalAmount(finalPrice);
         order.setUser(user);
         address.getOrders().add(order);
+        address.setUser(user);
         user.getOrders().add(order);
 
         return orderDao.save(order);

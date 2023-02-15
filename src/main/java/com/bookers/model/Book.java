@@ -49,6 +49,7 @@ public class Book {
     private String authorName;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @ManyToOne

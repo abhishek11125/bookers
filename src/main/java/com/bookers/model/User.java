@@ -49,7 +49,6 @@ public class User {
 
     //Buyer books list
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Book> buyerBooks = new ArrayList<>();
 
     //Buyer payment details
