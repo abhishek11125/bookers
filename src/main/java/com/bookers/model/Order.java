@@ -22,6 +22,8 @@ public class Order {
     @NotBlank
     private String orderStatus;
 
+    private double totalAmount;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
