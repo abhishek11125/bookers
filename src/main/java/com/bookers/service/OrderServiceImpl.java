@@ -39,10 +39,11 @@ public class OrderServiceImpl implements OrderService{
         Order order = new Order();
         double finalPrice = 0.0;
         for(Book i:books1){
+            i.setOrder(order);
             finalPrice = finalPrice+i.getPrice();
             order.getBooks().add(i);
         }
-
+        books1.removeAll(books1);
         order.setOrderStatus("Processing");
         order.setDate(LocalDate.now());
         order.setAddress(address);
