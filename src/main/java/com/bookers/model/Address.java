@@ -1,5 +1,6 @@
 package com.bookers.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Address {
     private User user;
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
 }
