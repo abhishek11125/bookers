@@ -22,7 +22,4 @@ public interface UserService {
 
     public User getProfile(String key) throws LoginException;
 
-    public List<Order> getOrderHistory(String key)throws LoginException,BookException;
-
-    public Order cancelOrder(Integer orderId,String key)throws LoginException,OrderException;
-}
+   }
