@@ -6,19 +6,30 @@ import com.bookers.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class OrderController {
     @Autowired
     private OrderService orderService;
-    @PostMapping("/placeorder/{key}")
+
+    @PostMapping("placeorder/{key}")
     public ResponseEntity<Order>placeOrderHandler(@RequestBody Address address, @PathVariable("key") String  key){
         Order order = orderService.placeOrder(address,key);
 
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("orders/{key}")
+    public ResponseEntity<List<Order>> getPlacedOrdersHandler(@PathVariable("key")String key){
+        List<Order> orders = orderService.getOrderHistory(key);
+
+        return new ResponseEntity<>(orders,HttpStatus.OK);
+    }
+    @DeleteMapping("cancelorder/{orderid}/{key}")
+    public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") String key){
+        Order order = orderService.cancelOrder(orderId, key);
+        return new ResponseEntity<>(order,HttpStatus.OK);
     }
 }

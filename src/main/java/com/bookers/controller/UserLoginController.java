@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<String> userLoginHandler(@RequestBody UserLoginDTO loginDTO){
            String key =  userLoginService.logIntoAccount(loginDTO);
 
            return new ResponseEntity<>(key, HttpStatus.OK);
     }
-    @PostMapping("/logout/{key}")
+    @PostMapping("logout/{key}")
     public ResponseEntity<String> userLogOutHandler(@PathVariable("key") String key){
         String message =  userLoginService.logOutFromAccount(key);
 

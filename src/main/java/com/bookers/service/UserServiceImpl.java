@@ -100,48 +100,4 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
-    @Override
-    public List<Order> getOrderHistory(String key) throws LoginException,BookException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-
-        if(userCurrentSession==null) throw new LoginException("Please Login");
-
-       Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
-
-       User user = opt.get();
-       List<Order> orders = user.getOrders();
-       if(orders.isEmpty()) throw new BookException("No any order placed yet");
-       return orders;
-    }
-
-    @Override
-    public Order cancelOrder(Integer orderId, String key) throws LoginException,OrderException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-
-        if(userCurrentSession==null) throw new LoginException("Please Login");
-
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
-
-        User user = opt.get();
-
-        Optional<Order> opt2 = orderDao.findById(orderId);
-
-        if (opt2.isEmpty())throw new OrderException("Order not found with order id "+orderId);
-
-        Order order = opt2.get();
-        order.setOrderStatus("Cancelled");
-
-        List<Order> userOrders = user.getOrders();
-        for (Order i:userOrders){
-            if(i.getOrderId()==orderId){
-                i.setOrderStatus("Cancelled");
-                break;
-            }
-        }
-
-        orderDao.delete(order);
-
-        return order;
-    }
-
 }
