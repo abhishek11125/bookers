@@ -12,8 +12,6 @@ import java.util.List;
 public interface OrderService {
     public Order placeOrder(Address address, String key)throws LoginException, BookException;
 
-    public List<Order> getOrderHistory(String key)throws LoginException,BookException;
-
     public Order cancelOrder(Integer orderId,String key)throws LoginException, OrderException;
 
 }

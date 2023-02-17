@@ -29,8 +29,8 @@ public class Order {
     @JsonIgnore
     private Address address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "userId")
     private User user;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
@@ -38,5 +38,6 @@ public class Order {
     List<Book> books = new ArrayList<>();
 
     @OneToOne
+    @JoinColumn(name = "paymentId")
     private Payment payment;
 }

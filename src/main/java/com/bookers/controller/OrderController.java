@@ -21,12 +21,6 @@ public class OrderController {
 
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
-    @GetMapping("orders/{key}")
-    public ResponseEntity<List<Order>> getPlacedOrdersHandler(@PathVariable("key")String key){
-        List<Order> orders = orderService.getOrderHistory(key);
-
-        return new ResponseEntity<>(orders,HttpStatus.OK);
-    }
     @DeleteMapping("cancelorder/{orderid}/{key}")
     public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") String key){
         Order order = orderService.cancelOrder(orderId, key);
