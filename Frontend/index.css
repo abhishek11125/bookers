@@ -1,0 +1,16 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+#navbar{
+    border: 1px solid red;
+    display: flex;
+}
+#navbar>img{
+    width: 8%;
+    height: 8%;
+}
+ul{
+    display: flex;
+}
