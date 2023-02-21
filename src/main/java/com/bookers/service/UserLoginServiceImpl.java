@@ -1,10 +1,10 @@
 package com.bookers.service;
 
 import com.bookers.exception.LoginException;
-import com.bookers.model.User;
+import com.bookers.model.Customer;
 import com.bookers.model.UserCurrentSession;
 import com.bookers.model.UserLoginDTO;
-import com.bookers.repository.UserDao;
+import com.bookers.repository.CustomerDao;
 import com.bookers.repository.UserSessionDao;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +16,24 @@ import java.util.Optional;
 @Service
 public class UserLoginServiceImpl implements UserLoginService{
     @Autowired
-    private UserDao userDao;
+    private CustomerDao customerDao;
 
     @Autowired
     private UserSessionDao userSessionDao;
 
     @Override
     public String logIntoAccount(UserLoginDTO userLoginDTO) throws LoginException {
-        User existingUser = userDao.findByEmail(userLoginDTO.getEmail());
+        Customer existingCustomer = customerDao.findByEmail(userLoginDTO.getEmail());
 
-        if (existingUser==null) throw new LoginException("Incorrect Username");
+        if (existingCustomer ==null) throw new LoginException("Incorrect Username");
 
-        Optional<UserCurrentSession> opt1 = userSessionDao.findById(existingUser.getUserId());
+        Optional<UserCurrentSession> opt1 = userSessionDao.findById(existingCustomer.getUserId());
 
         if(opt1.isPresent()) throw new LoginException("User already logged in");
 
-        if(existingUser.getPassword().equals(userLoginDTO.getPassword())){
+        if(existingCustomer.getPassword().equals(userLoginDTO.getPassword())){
             String key = RandomString.make(6);
-            UserCurrentSession userCurrentSession = new UserCurrentSession(existingUser.getUserId(),key,LocalDateTime.now());
+            UserCurrentSession userCurrentSession = new UserCurrentSession(existingCustomer.getUserId(),key,LocalDateTime.now());
             userSessionDao.save(userCurrentSession);
             return userCurrentSession.getUid();
         }else {

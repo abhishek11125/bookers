@@ -5,15 +5,14 @@ import com.bookers.exception.AuthorException;
 import com.bookers.exception.BookException;
 import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
-import com.bookers.model.User;
+import com.bookers.model.Customer;
 import com.bookers.model.UserCurrentSession;
 import com.bookers.repository.BookDao;
-import com.bookers.repository.UserDao;
+import com.bookers.repository.CustomerDao;
 import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -21,7 +20,7 @@ public class BookServiceImpl implements BookService{
     @Autowired
     private BookDao bookDao;
     @Autowired
-    private UserDao userDao;
+    private CustomerDao customerDao;
     @Autowired
     private UserSessionDao userSessionDao;
 
@@ -30,12 +29,12 @@ public class BookServiceImpl implements BookService{
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
-        if(user.getRole().equalsIgnoreCase("Author")){
-            book.setAuthorName(user.getName());
+        if(customer.getRole().equalsIgnoreCase("Author")){
+            book.setAuthorName(customer.getName());
             Book book1 = bookDao.save(book);
             return book1;
         }
@@ -47,7 +46,7 @@ public class BookServiceImpl implements BookService{
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
         if(userCurrentSession==null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
 
         List<Book> books =  bookDao.findByTitle(title);
@@ -62,7 +61,7 @@ public class BookServiceImpl implements BookService{
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
         if(userCurrentSession==null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
         List<Book> books =  bookDao.findByAuthorName(name);
 
@@ -75,7 +74,7 @@ public class BookServiceImpl implements BookService{
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
         List<Book> books =  bookDao.findAll();
         if(books.isEmpty()) throw new BookException("No any book found");
@@ -87,11 +86,11 @@ public class BookServiceImpl implements BookService{
         UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
         if(userCurrentSession==null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
-        if(user.getRole().equalsIgnoreCase("Author")){
+        if(customer.getRole().equalsIgnoreCase("Author")){
             Optional<Book> opt1 = bookDao.findById(bookId);
             if(opt1.isEmpty()) throw new BookException("Book not found with book id "+bookId);
             Book book = opt1.get();

@@ -6,7 +6,7 @@ import com.bookers.exception.OrderException;
 import com.bookers.model.*;
 import com.bookers.repository.CartDao;
 import com.bookers.repository.OrderDao;
-import com.bookers.repository.UserDao;
+import com.bookers.repository.CustomerDao;
 import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderDao orderDao;
     @Autowired
-    private UserDao userDao;
+    private CustomerDao customerDao;
     @Autowired
     private UserSessionDao userSessionDao;
     @Autowired
@@ -30,11 +30,11 @@ public class OrderServiceImpl implements OrderService{
 
         if (userCurrentSession == null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
-        List<Book> books1 = user.getCart().getBook();
+        List<Book> books1 = customer.getCart().getBook();
         if(books1.isEmpty())throw new BookException("Cart is empty");
 
         Order order = new Order();
@@ -49,10 +49,10 @@ public class OrderServiceImpl implements OrderService{
         order.setDate(LocalDate.now());
         order.setAddress(address);
         order.setTotalAmount(finalPrice);
-        order.setUser(user);
+        order.setCustomer(customer);
         address.getOrders().add(order);
-        address.setUser(user);
-        user.setOrder(order);
+        address.setCustomer(customer);
+        customer.setOrder(order);
 
         return orderDao.save(order);
     }
@@ -63,9 +63,9 @@ public class OrderServiceImpl implements OrderService{
 
         if(userCurrentSession==null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
         Optional<Order> opt2 = orderDao.findById(orderId);
 
@@ -73,7 +73,7 @@ public class OrderServiceImpl implements OrderService{
 
         Order order = opt2.get();
 
-        Order order1 = user.getOrder();
+        Order order1 = customer.getOrder();
         order1.setOrderStatus("Cancelled");
 
         orderDao.delete(order);

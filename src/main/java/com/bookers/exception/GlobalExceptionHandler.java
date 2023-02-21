@@ -21,8 +21,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
     //user exception handler
-    @ExceptionHandler(UserException.class)
-    public ResponseEntity<MyErrorDetails> userExceptionHandler(UserException ue, WebRequest req){
+    @ExceptionHandler(CustomerException.class)
+    public ResponseEntity<MyErrorDetails> userExceptionHandler(CustomerException ue, WebRequest req){
         MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),ue.getMessage(),req.getDescription(false));
 
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);

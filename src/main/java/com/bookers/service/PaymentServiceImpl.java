@@ -3,20 +3,17 @@ package com.bookers.service;
 import com.bookers.exception.AccessDenied;
 import com.bookers.exception.LoginException;
 import com.bookers.exception.PaymentException;
+import com.bookers.model.Customer;
 import com.bookers.model.Order;
 import com.bookers.model.Payment;
-import com.bookers.model.User;
 import com.bookers.model.UserCurrentSession;
 import com.bookers.repository.PaymentDao;
-import com.bookers.repository.UserDao;
+import com.bookers.repository.CustomerDao;
 import com.bookers.repository.UserSessionDao;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService{
     private PaymentDao paymentDao;
 
     @Autowired
-    private UserDao userDao;
+    private CustomerDao customerDao;
 
     @Autowired
     private UserSessionDao userSessionDao;
@@ -36,20 +33,20 @@ public class PaymentServiceImpl implements PaymentService{
 
         if(userCurrentSession==null)throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
-        Order order = user.getOrder();
+        Order order = customer.getOrder();
         order.setOrderStatus("Ordered");
 
         double totalAmount = order.getTotalAmount();
 
         payment.setPaymentAmount(totalAmount);
         payment.setTimeStamp(LocalDateTime.now());
-        payment.setUser(user);
+        payment.setCustomer(customer);
         payment.setOrder(order);
-        user.getBuyerPayments().add(payment);
+        customer.getBuyerPayments().add(payment);
 
         Payment payment1 = paymentDao.save(payment);
 
