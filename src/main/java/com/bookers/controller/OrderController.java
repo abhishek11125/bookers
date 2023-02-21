@@ -15,15 +15,15 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("placeorder/{key}")
-    public ResponseEntity<Order>placeOrderHandler(@RequestBody Address address, @PathVariable("key") String  key){
-        Order order = orderService.placeOrder(address,key);
+    @PostMapping("customers/placeorder/{id}")
+    public ResponseEntity<Order>placeOrderHandler(@RequestBody Address address, @PathVariable("id") Integer  customerId){
+        Order order = orderService.placeOrder(address,customerId);
 
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
-    @DeleteMapping("cancelorder/{orderid}/{key}")
-    public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") String key){
-        Order order = orderService.cancelOrder(orderId, key);
+    @DeleteMapping("customers/cancelorder/{orderid}/{id}")
+    public ResponseEntity<Order> cancelOrderHandler(@PathVariable("orderid") Integer orderId,@PathVariable("key") Integer customerId){
+        Order order = orderService.cancelOrder(orderId,customerId);
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 }

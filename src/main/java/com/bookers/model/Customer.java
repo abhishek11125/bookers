@@ -43,20 +43,20 @@ public class Customer {
     @NotBlank(message = "Role can not be blank")
     private String role;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
     //Buyer books list
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Book> buyerBooks = new ArrayList<>();
 
     //Buyer payment details
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Payment> buyerPayments = new ArrayList<>();
 
     //Author books list
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
     List<Book> authorBooks = new ArrayList<>();
 

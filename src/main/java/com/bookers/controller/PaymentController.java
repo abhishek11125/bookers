@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
-    @PostMapping("payment/{key}")
-    public ResponseEntity<Integer> proceedToPaymentHandler(@RequestBody Payment payment, @PathVariable("key")String key){
-       Integer paymentId = paymentService.proceedToPayment(payment,key);
+    @PostMapping("customers/payment/{id}")
+    public ResponseEntity<Integer> proceedToPaymentHandler(@RequestBody Payment payment, @PathVariable("id")Integer customerId){
+       Integer paymentId = paymentService.proceedToPayment(payment,customerId);
 
        return new ResponseEntity<>(paymentId, HttpStatus.OK);
     }
