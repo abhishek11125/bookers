@@ -5,20 +5,17 @@ import com.bookers.model.*;
 import com.bookers.repository.BookDao;
 import com.bookers.repository.OrderDao;
 import com.bookers.repository.CustomerDao;
-import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerDao customerDao;
     @Autowired
     private BookDao bookDao;
-    @Autowired
-    private UserSessionDao userSessionDao;
     @Autowired
     private OrderDao orderDao;
     @Override
@@ -39,64 +36,46 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllUsers(String key) throws LoginException, AccessDenied {
-        UserCurrentSession userCurrentSession =  userSessionDao.findByUid(key);
-
-        if (userCurrentSession==null) throw new LoginException("Please Login");
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
-
-        Customer customer = opt.get();
-
-        if(customer.getRole().equalsIgnoreCase("Admin")){
-               List<Customer> customers =  customerDao.findAll();
-               return customers;
-        }else throw new AccessDenied("Not Authorized");
-
+    public List<Customer> getAllUsers(){
+       List<Customer> customers = customerDao.findAll();
+       return customers;
     }
 
     @Override
-    public Customer updateMobile(String mobile, String key) throws LoginException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+    public Customer updateMobile(String mobile, String email){
 
-        if(userCurrentSession==null) throw new LoginException("Please Login");
+        Customer customer = customerDao.findByEmail(email);
 
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
+        customer.setMobile(mobile);
 
-       Optional<Customer> user = customerDao.findById(userCurrentSession.getUserId());
+       Customer customer1 = customerDao.save(customer);
 
-       Customer customer1 = opt.get();
-
-       customer1.setMobile(mobile);
-
-       customerDao.save(customer1);
        return customer1;
     }
 
     @Override
-    public Customer updatePassword(String email, String newPass, String key) {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-
-        if(userCurrentSession==null) throw new LoginException("Please Login");
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
-
-
+    public Customer updatePassword(String email, String newPass)throws CustomerException {
         Customer customer = customerDao.findByEmail(email);
+
+        if(customer==null)throw new CustomerException("Customer not found with email "+email);
+
         customer.setPassword(newPass);
-        customerDao.save(customer);
+
+        Customer customer1 = customerDao.save(customer);
 
         return customer;
     }
 
-    @Override
-    public Customer getProfile(String key) throws LoginException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-            if(userCurrentSession==null) throw new LoginException("Please Login");
-
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
-
-        Customer customer = opt.get();
-
-        return customer;
-    }
+//    @Override
+//    public Customer getProfile(String key) throws LoginException {
+//        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
+//            if(userCurrentSession==null) throw new LoginException("Please Login");
+//
+//        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
+//
+//        Customer customer = opt.get();
+//
+//        return customer;
+//    }
 
 }

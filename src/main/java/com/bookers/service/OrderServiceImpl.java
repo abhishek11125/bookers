@@ -25,12 +25,8 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private CartDao cartDao;
     @Override
-    public Order placeOrder(Address address, String key)throws LoginException, BookException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-
-        if (userCurrentSession == null) throw new LoginException("Please Login");
-
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
+    public Order placeOrder(Address address,Integer customerId)throws BookException {
+        Optional<Customer> opt = customerDao.findById(customerId);
 
         Customer customer = opt.get();
 
@@ -53,17 +49,14 @@ public class OrderServiceImpl implements OrderService{
         address.getOrders().add(order);
         address.setCustomer(customer);
         customer.setOrder(order);
+        customer.getAddresses().add(address);
 
         return orderDao.save(order);
     }
 
     @Override
-    public Order cancelOrder(Integer orderId, String key) throws LoginException, OrderException {
-        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-
-        if(userCurrentSession==null) throw new LoginException("Please Login");
-
-        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
+    public Order cancelOrder(Integer orderId,Integer customerId) throws OrderException {
+        Optional<Customer> opt = customerDao.findById(customerId);
 
         Customer customer = opt.get();
 

@@ -9,16 +9,16 @@ import com.bookers.model.Book;
 import java.util.List;
 
 public interface BookService {
-    public Book addBook(Book book, String key)throws LoginException, AccessDenied;
+    public Book addBook(Book book);
 
-    public List<Book> getBookByTitle(String title, String key) throws LoginException, BookException;
+    public List<Book> getBookByTitle(String title) throws BookException;
 
-    public List<Book> getBookByAuthorName(String name, String key) throws LoginException, AuthorException;
+    public List<Book> getBookByAuthorName(String name) throws BookException;
 
-    public List<Book> getAllBooks(String key)throws BookException,LoginException;
+    public List<Book> getAllBooks()throws BookException;
 
-    public Book removeBook(Integer bookId, String key)throws LoginException,BookException,AccessDenied;
+    public Book removeBook(Integer bookId)throws BookException;
 
-    public List<Book> getBookByLanguage(String language, String key) throws LoginException,BookException;
+    public List<Book> getBookByLanguage(String language) throws BookException;
 
 }

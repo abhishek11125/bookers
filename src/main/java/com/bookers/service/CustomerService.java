@@ -11,12 +11,15 @@ public interface CustomerService {
 
     public Customer getUserByEmail(String email)throws CustomerException;
 
-    public List<Customer> getAllUsers(String key)throws LoginException, AccessDenied;
+    public List<Customer> getAllUsers();
 
-    public Customer updateMobile(String mobile, String key)throws LoginException;
 
-    public Customer updatePassword(String email, String newPass, String key);
+    public Customer updatePassword(String email, String newPass)throws CustomerException;
 
-    public Customer getProfile(String key) throws LoginException;
+    Customer updateMobile(String mobile, String email);
+
+
+
+//    public Customer getProfile(String key) throws LoginException;
 
    }
