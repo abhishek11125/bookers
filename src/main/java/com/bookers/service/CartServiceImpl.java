@@ -5,11 +5,11 @@ import com.bookers.exception.BookException;
 import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
 import com.bookers.model.Cart;
-import com.bookers.model.User;
+import com.bookers.model.Customer;
 import com.bookers.model.UserCurrentSession;
 import com.bookers.repository.BookDao;
 import com.bookers.repository.CartDao;
-import com.bookers.repository.UserDao;
+import com.bookers.repository.CustomerDao;
 import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private UserSessionDao userSessionDao;
     @Autowired
-    private UserDao userDao;
+    private CustomerDao customerDao;
 
 
     @Override
@@ -34,13 +34,13 @@ public class CartServiceImpl implements CartService {
 
         if (userCurrentSession == null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
-        User user = opt.get();
-        if (user.getRole().equalsIgnoreCase("Buyer")) {
+        Customer customer = opt.get();
+        if (customer.getRole().equalsIgnoreCase("Buyer")) {
             Optional<Book> opt1 = bookDao.findById(book.getBookId());
             if(opt1.isEmpty())throw new BookException("Book not found");
-            Cart cart = user.getCart();
+            Cart cart = customer.getCart();
             cart.getBook().add(book);
             cartDao.save(cart);
             return book;
@@ -55,13 +55,13 @@ public class CartServiceImpl implements CartService {
 
         if (userCurrentSession == null) throw new LoginException("Please Login");
 
-        Optional<User> opt = userDao.findById(userCurrentSession.getUserId());
+        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
 
         int bookId = book.getBookId();
 
-          User user = opt.get();
+          Customer customer = opt.get();
 
-          int cartId = user.getCart().getCartId();
+          int cartId = customer.getCart().getCartId();
 
           Optional<Cart> opt2 = cartDao.findById(cartId);
 
@@ -82,11 +82,11 @@ public class CartServiceImpl implements CartService {
 
         int userId = userCurrentSession.getUserId();
 
-        Optional<User> opt =  userDao.findById(userId);
+        Optional<Customer> opt =  customerDao.findById(userId);
 
-        User user = opt.get();
+        Customer customer = opt.get();
 
-        List<Book> cartBooks = user.getCart().getBook();
+        List<Book> cartBooks = customer.getCart().getBook();
 
         if(cartBooks.isEmpty()) throw new BookException("Cart is empty");
 

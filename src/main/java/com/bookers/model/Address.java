@@ -3,8 +3,8 @@ package com.bookers.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class Address {
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Customer customer;
 
     @OneToMany(mappedBy = "address")
     private List<Order> orders = new ArrayList<>();
