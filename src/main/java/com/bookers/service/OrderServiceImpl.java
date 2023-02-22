@@ -1,13 +1,11 @@
 package com.bookers.service;
 
 import com.bookers.exception.BookException;
-import com.bookers.exception.LoginException;
 import com.bookers.exception.OrderException;
 import com.bookers.model.*;
 import com.bookers.repository.CartDao;
 import com.bookers.repository.OrderDao;
 import com.bookers.repository.CustomerDao;
-import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +18,6 @@ public class OrderServiceImpl implements OrderService{
     private OrderDao orderDao;
     @Autowired
     private CustomerDao customerDao;
-    @Autowired
-    private UserSessionDao userSessionDao;
     @Autowired
     private CartDao cartDao;
     @Override

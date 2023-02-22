@@ -1,14 +1,9 @@
 package com.bookers.service;
 
-import com.bookers.exception.AccessDenied;
-import com.bookers.exception.AuthorException;
 import com.bookers.exception.BookException;
-import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
-import com.bookers.model.Customer;
 import com.bookers.repository.BookDao;
 import com.bookers.repository.CustomerDao;
-import com.bookers.repository.UserSessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -20,18 +20,16 @@ public class CustomerServiceImpl implements CustomerService {
     private OrderDao orderDao;
     @Override
     public Customer registerUser(Customer customer) {
-        if(customer.getRole().equalsIgnoreCase("Buyer")) {
             Cart cart = new Cart();
             customer.setCart(cart);
             cart.setCustomer(customer);
-        }
         return customerDao.save(customer);
     }
 
     @Override
     public Customer getUserByEmail(String email) throws CustomerException {
        Customer customer = customerDao.findByEmail(email);
-       if(customer ==null) throw new CustomerException("User not found with email"+email);
+       if(customer ==null) throw new CustomerException("User not found with email "+email);
        else return customer;
     }
 

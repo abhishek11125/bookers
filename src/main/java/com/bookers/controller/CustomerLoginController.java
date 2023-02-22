@@ -19,10 +19,5 @@ public class CustomerLoginController {
 
         return new ResponseEntity<>(customer,HttpStatus.ACCEPTED);
     }
-//    @PostMapping("logout/{key}")
-//    public ResponseEntity<String> userLogOutHandler(@PathVariable("key") String key){
-//        String message =  userLoginService.logOutFromAccount(key);
-//
-//        return new ResponseEntity<>(message,HttpStatus.OK);
-//    }
+
 }
