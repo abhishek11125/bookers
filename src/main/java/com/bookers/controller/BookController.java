@@ -50,22 +50,22 @@ public class BookController {
         Book book = bookService.removeBook(bookId);
         return new ResponseEntity<>(book,HttpStatus.OK);
     }
-    @PostMapping("customers/addtocart/{id}")
-    public ResponseEntity<Book> addBookToCartHandler(@RequestBody Book book,@PathVariable("id") Integer customerId){
-       Book book1 = cartService.addBookToCart(book,customerId);
+    @PostMapping("customers/addtocart")
+    public ResponseEntity<Book> addBookToCartHandler(@RequestBody Book book){
+       Book book1 = cartService.addBookToCart(book);
 
        return new ResponseEntity<>(book1,HttpStatus.OK);
     }
 
-    @DeleteMapping("customers/removefromcart/{id}")
-    public ResponseEntity<String> removeFromCartHandler(@RequestBody Book book,@PathVariable("id") Integer customerId){
-       String message =  cartService.removeBookFromCart(book,customerId);
+    @DeleteMapping("customers/removefromcart")
+    public ResponseEntity<String> removeFromCartHandler(@RequestBody Book book){
+       String message =  cartService.removeBookFromCart(book);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
-    @GetMapping("customers/cartbooks/{id}")
-    public ResponseEntity<List<Book>> getBooksFromCartHandler(@PathVariable("id") Integer customerId){
-          List<Book> cartBooks =   cartService.getBooksInCart(customerId);
+    @GetMapping("customers/cartbooks")
+    public ResponseEntity<List<Book>> getBooksFromCartHandler(){
+          List<Book> cartBooks =   cartService.getBooksInCart();
           return new ResponseEntity<>(cartBooks,HttpStatus.OK);
     }
 }
