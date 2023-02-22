@@ -7,6 +7,8 @@ import com.bookers.repository.CartDao;
 import com.bookers.repository.OrderDao;
 import com.bookers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,10 +23,10 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private CartDao cartDao;
     @Override
-    public Order placeOrder(Address address,Integer customerId)throws BookException {
-        Optional<Customer> opt = customerDao.findById(customerId);
+    public Order placeOrder(Address address)throws BookException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Customer customer = opt.get();
+        Customer customer = customerDao.findByEmail(authentication.getName());
 
         List<Book> books1 = customer.getCart().getBook();
         if(books1.isEmpty())throw new BookException("Cart is empty");
@@ -51,10 +53,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order cancelOrder(Integer orderId,Integer customerId) throws OrderException {
-        Optional<Customer> opt = customerDao.findById(customerId);
+    public Order cancelOrder(Integer orderId) throws OrderException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Customer customer = opt.get();
+        Customer customer = customerDao.findByEmail(authentication.getName());
 
         Optional<Order> opt2 = orderDao.findById(orderId);
 

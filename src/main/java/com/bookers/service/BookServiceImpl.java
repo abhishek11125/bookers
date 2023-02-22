@@ -2,9 +2,13 @@ package com.bookers.service;
 
 import com.bookers.exception.BookException;
 import com.bookers.model.Book;
+import com.bookers.model.Customer;
 import com.bookers.repository.BookDao;
 import com.bookers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,11 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public Book addBook(Book book){
-       return bookDao.save(book);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+           Customer customer =  customerDao.findByEmail(authentication.getName());
+           String name = customer.getName();
+           book.setAuthorName(name);
+        return bookDao.save(book);
     }
 
     @Override

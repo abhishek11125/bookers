@@ -6,9 +6,9 @@ import com.bookers.model.Book;
 import java.util.List;
 
 public interface CartService {
-    public Book addBookToCart(Book book, Integer customerId);
+    public Book addBookToCart(Book book);
 
-    public String  removeBookFromCart(Book book,Integer customerId);
+    public String  removeBookFromCart(Book book);
 
-    public List<Book> getBooksInCart(Integer customerId)throws BookException;
+    public List<Book> getBooksInCart()throws BookException;
 }

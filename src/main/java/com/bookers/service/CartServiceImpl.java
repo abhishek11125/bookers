@@ -8,6 +8,8 @@ import com.bookers.repository.BookDao;
 import com.bookers.repository.CartDao;
 import com.bookers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +25,10 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Book addBookToCart(Book book,Integer customerId){
+    public Book addBookToCart(Book book){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Optional<Customer> opt = customerDao.findById(customerId);
-
-        Customer customer = opt.get();
+        Customer customer = customerDao.findByEmail(authentication.getName());
 
         Cart cart = customer.getCart();
 
@@ -37,9 +38,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String removeBookFromCart(Book book, Integer customerId){
-        Optional<Customer> opt = customerDao.findById(customerId);
-        Customer customer = opt.get();
+    public String removeBookFromCart(Book book){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+       Customer customer = customerDao.findByEmail(authentication.getName());
 
         Cart cart = customer.getCart();
         List<Book> books = cart.getBook();
@@ -56,10 +59,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Book> getBooksInCart(Integer customerId) throws BookException{
-        Optional<Customer> opt = customerDao.findById(customerId);
+    public List<Book> getBooksInCart() throws BookException{
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Customer customer = opt.get();
+        Customer customer = customerDao.findByEmail(authentication.getName());
 
         Cart cart = customer.getCart();
 

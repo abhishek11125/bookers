@@ -10,8 +10,8 @@ import com.bookers.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    public Order placeOrder(Address address, Integer customerId)throws OrderException;
+    public Order placeOrder(Address address)throws OrderException;
 
-    public Order cancelOrder(Integer orderId,Integer customerId)throws OrderException;
+    public Order cancelOrder(Integer orderId)throws OrderException;
 
 }

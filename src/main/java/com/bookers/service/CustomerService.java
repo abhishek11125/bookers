@@ -18,8 +18,6 @@ public interface CustomerService {
 
     Customer updateMobile(String mobile, String email);
 
-
-
-//    public Customer getProfile(String key) throws LoginException;
+    public Customer getProfile();
 
    }

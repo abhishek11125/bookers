@@ -7,6 +7,8 @@ import com.bookers.model.Payment;
 import com.bookers.repository.PaymentDao;
 import com.bookers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,9 +24,10 @@ public class PaymentServiceImpl implements PaymentService{
 
 
     @Override
-    public Integer proceedToPayment(Payment payment,Integer customerId) throws PaymentException{
-        Optional<Customer> opt = customerDao.findById(customerId);
-        Customer customer = opt.get();
+    public Integer proceedToPayment(Payment payment) throws PaymentException{
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Customer customer = customerDao.findByEmail(authentication.getName());
 
         Order order = customer.getOrder();
         order.setOrderStatus("Ordered");

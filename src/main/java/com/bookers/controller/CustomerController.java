@@ -50,10 +50,10 @@ public class CustomerController {
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 
-//    @GetMapping("customers/profile")
-//    public ResponseEntity<Customer> getProfileHandler(@PathVariable("key") String key){
-//        Customer customer =  customerService.getProfile(key);
-//        return new ResponseEntity<>(customer,HttpStatus.OK);
-//    }
+    @GetMapping("customers/profile")
+    public ResponseEntity<Customer> getProfileHandler(){
+        Customer customer =  customerService.getProfile();
+        return new ResponseEntity<>(customer,HttpStatus.OK);
+    }
 
 }

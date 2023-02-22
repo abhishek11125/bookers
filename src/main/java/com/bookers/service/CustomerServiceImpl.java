@@ -6,6 +6,8 @@ import com.bookers.repository.BookDao;
 import com.bookers.repository.OrderDao;
 import com.bookers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,16 +66,13 @@ public class CustomerServiceImpl implements CustomerService {
         return customer;
     }
 
-//    @Override
-//    public Customer getProfile(String key) throws LoginException {
-//        UserCurrentSession userCurrentSession = userSessionDao.findByUid(key);
-//            if(userCurrentSession==null) throw new LoginException("Please Login");
-//
-//        Optional<Customer> opt = customerDao.findById(userCurrentSession.getUserId());
-//
-//        Customer customer = opt.get();
-//
-//        return customer;
-//    }
+    @Override
+    public Customer getProfile(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Customer customer = customerDao.findByEmail(authentication.getName());
+
+        return customer;
+    }
 
 }
