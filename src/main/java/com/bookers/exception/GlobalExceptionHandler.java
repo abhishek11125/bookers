@@ -41,14 +41,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
-    //access exception
-    @ExceptionHandler(AccessDenied.class)
-    public ResponseEntity<MyErrorDetails> authorExceptionHandler(AccessDenied ad, WebRequest req){
-        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),ad.getMessage(),req.getDescription(false));
-
-        return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
-    }
-
     @ExceptionHandler(OrderException.class)
     public ResponseEntity<MyErrorDetails> authorExceptionHandler(OrderException oe, WebRequest req){
         MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),oe.getMessage(),req.getDescription(false));
@@ -57,12 +49,12 @@ public class GlobalExceptionHandler {
     }
 
     //generic exception handler
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<MyErrorDetails> genericExceptionHandler(Exception e, WebRequest req){
-        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
-
-        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<MyErrorDetails> genericExceptionHandler(Exception e, WebRequest req){
+//        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
+//
+//        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+//    }
 
     //login exception handler
     @ExceptionHandler(LoginException.class)

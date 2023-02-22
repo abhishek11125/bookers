@@ -34,10 +34,11 @@ public class Customer {
     @NotBlank(message = "Mobile can not be blank")
     private String mobile;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{5,15}$",message = "Password must be of min 5 and max 15 character and includes at least one uppercase,lowercase,symbols and numbers from 0 to 9")
+//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{5,30}$",message = "Password must be of min 5 and max 15 character and includes at least one uppercase,lowercase,symbols and numbers from 0 to 9")
+    @NotBlank(message = "Please provide password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "customer")
     private Cart cart;
 
     @NotBlank(message = "Role can not be blank")

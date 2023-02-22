@@ -1,7 +1,5 @@
 package com.bookers.service;
 
-import com.bookers.exception.AccessDenied;
-import com.bookers.exception.LoginException;
 import com.bookers.exception.PaymentException;
 import com.bookers.model.Customer;
 import com.bookers.model.Order;

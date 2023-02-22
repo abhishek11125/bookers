@@ -1,9 +1,6 @@
 package com.bookers.service;
 
-import com.bookers.exception.AccessDenied;
-import com.bookers.exception.AuthorException;
 import com.bookers.exception.BookException;
-import com.bookers.exception.LoginException;
 import com.bookers.model.Book;
 
 import java.util.List;
