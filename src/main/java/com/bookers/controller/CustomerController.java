@@ -32,7 +32,7 @@ public class CustomerController {
 
            return new ResponseEntity<>(customer,HttpStatus.OK);
     }
-    @GetMapping("/customers")
+    @GetMapping("/admin/allusers")
     public ResponseEntity<List<Customer>> getAllUsersHandler(){
         List<Customer> customers =  customerService.getAllUsers();
         return new ResponseEntity<>(customers,HttpStatus.OK);

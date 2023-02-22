@@ -47,19 +47,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
-    //Buyer books list
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    private List<Book> buyerBooks = new ArrayList<>();
-
     //Buyer payment details
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Payment> buyerPayments = new ArrayList<>();
-
-    //Author books list
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<Book> authorBooks = new ArrayList<>();
 
     @OneToOne
     private Order order;

@@ -41,7 +41,7 @@ public class AppConfig {
                 }).and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/register").permitAll()
-                .requestMatchers(HttpMethod.GET,"/customers").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"admin/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/customers/**").hasRole("USER")
                 .requestMatchers(HttpMethod.POST,"/author/**").hasRole("AUTHOR")
                 .anyRequest().authenticated()
