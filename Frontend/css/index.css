@@ -1,0 +1,60 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+#navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    width: 100%;
+    z-index: 10;
+}
+#navbar>img{
+    width: 7%;
+    padding: 10px;
+}
+#navbar>div{
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+}
+#navbar>div>input{
+    width: 80%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+#navbar>div>button{
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+#navbar>ul{
+    display: flex;
+    list-style: none;
+    width: 20%;
+}
+#navbar>ul>a{
+    margin: 5%;
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+}
+#main{
+  width: 100%;
+}
+#books{
+    width: 80%;
+    margin: 5% auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,400px);
+}
+#books>div{
+}   
