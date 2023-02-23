@@ -18,7 +18,7 @@ async function register() {
   console.log(signupData);
   //   signupData = JSON.stringify(signupData);
 
-  let siguupUrl = "http://localhost/8888/register";
+  let siguupUrl = "http://localhost:8888/register";
 
   let response = await fetch(siguupUrl, {
     method: "POST",
