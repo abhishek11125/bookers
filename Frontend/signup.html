@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+    <form id="form">
+        <h1>Signup</h1>
+        <input type="text"id="name" placeholder="Name">
+        <select id="gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <input type="email" id="email" placeholder="Email Id">
+        <input type="number" id="mobile" placeholder="Mobile">
+        <input type="password" id="password" placeholder="Password">
+        <select id="role">
+            <option>Choose Role</option>
+            <option value="admin">Admin</option>
+            <option value="author">Author</option>
+            <option value="user">User</option>
+        </select>
+        <!-- <button onclick="register()">Signup</button> -->
+        <input type="submit">
+    </form>
+</body>
+<script type="module">
+    import {navbar} from "./components/navbar.js"
+
+    document.getElementById("navbar").innerHTML = navbar();
+</script>
+<script src="./scripts/signup.js">
+
+</script>
+</html>
