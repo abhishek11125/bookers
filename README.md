@@ -11,7 +11,7 @@ Buyers can browse the books listed on the platform by searching for specific tit
 
 ### ERR Diagram
 
-![ERR Diagram]()
+![ERR Diagram](https://i.ibb.co/vjhwSRH/ERR-bookers.png)
 <hr>
 
 
