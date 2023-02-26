@@ -32,6 +32,7 @@ public class Address {
     private Customer customer;
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
 }

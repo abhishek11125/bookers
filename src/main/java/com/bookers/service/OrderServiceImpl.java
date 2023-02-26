@@ -38,7 +38,6 @@ public class OrderServiceImpl implements OrderService{
             finalPrice = finalPrice+i.getPrice();
             order.getBooks().add(i);
         }
-        books1.removeAll(books1);
         order.setOrderStatus("Processing");
         order.setDate(LocalDate.now());
         order.setAddress(address);
@@ -48,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
         address.setCustomer(customer);
         customer.setOrder(order);
         customer.getAddresses().add(address);
+        books1.removeAll(books1);
 
         return orderDao.save(order);
     }

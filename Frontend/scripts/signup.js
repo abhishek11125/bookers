@@ -5,7 +5,7 @@ let form = document
     register();
   });
 
-async function register() {
+let register = async () => {
   let signupData = {
     name: document.getElementById("name").value,
     gender: document.getElementById("gender").value,
@@ -15,15 +15,14 @@ async function register() {
     role: document.getElementById("role").value,
   };
 
-  console.log(signupData);
-  //   signupData = JSON.stringify(signupData);
+  signupData = JSON.stringify(signupData);
 
   let siguupUrl = "http://localhost:8888/register";
 
   let response = await fetch(siguupUrl, {
     method: "POST",
 
-    body: JSON.stringify(signupData),
+    body: signupData,
 
     headers: {
       "Content-Type": "application/json",
@@ -33,4 +32,4 @@ async function register() {
   let data = await response.json();
 
   console.log(data);
-}
+};

@@ -22,9 +22,11 @@ public class CustomerServiceImpl implements CustomerService {
     private OrderDao orderDao;
     @Override
     public Customer registerUser(Customer customer) {
+        if(customer.getRole().equals("ROLE_USER")) {
             Cart cart = new Cart();
             customer.setCart(cart);
-            cart.setCustomer(customer);
+        }
+//            cart.setCustomer(customer);
         return customerDao.save(customer);
     }
 

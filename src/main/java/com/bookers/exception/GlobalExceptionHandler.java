@@ -48,13 +48,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
-    //generic exception handler
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<MyErrorDetails> genericExceptionHandler(Exception e, WebRequest req){
-//        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
-//
-//        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
-//    }
+//    generic exception handler
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<MyErrorDetails> genericExceptionHandler(Exception e, WebRequest req){
+        MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
+
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 
     //login exception handler
     @ExceptionHandler(LoginException.class)

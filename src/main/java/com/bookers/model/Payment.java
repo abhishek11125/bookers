@@ -25,10 +25,12 @@ public class Payment {
     private PaymentMethod paymentMethod;
     @NotBlank(message = "Please provide card holder name")
     private String cardHolderName;
-    @CreditCardNumber
+//    @CreditCardNumber
+    @NotBlank(message = "Please provide card number")
     private String cardNumber;
-    @Min(value = 1,message = "CVV can not be blank")
-    @Max(value = 3,message = "Please enter correct CVV")
+//    @Min(value = 1,message = "CVV can not be blank")
+//    @Max(value = 2,message = "Please enter correct CVV")
+    @NotNull(message = "Please provide correct cvv")
     private Integer cvv;
     @JsonIgnore(value = false)
     private double paymentAmount;
@@ -37,7 +39,7 @@ public class Payment {
     @JsonIgnore
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JsonIgnore
     private Order order;
 
