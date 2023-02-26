@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerLoginController {
     @Autowired
     private CustomerDao customerDao;
-
     @GetMapping("/signIn")
     public ResponseEntity<Customer> userLoginHandler(Authentication auth){
+
         Customer customer = customerDao.findByEmail(auth.getName());
 
         return new ResponseEntity<>(customer,HttpStatus.ACCEPTED);

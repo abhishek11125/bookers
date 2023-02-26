@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 public class CustomerController {
 
     @Autowired
@@ -25,7 +24,7 @@ public class CustomerController {
        customer.setRole("ROLE_"+customer.getRole().toUpperCase());
        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
        Customer customer1 = customerService.registerUser(customer);
-        return new ResponseEntity<>(customer1, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(customer1, HttpStatus.OK);
     }
     @GetMapping("/customers/{email}")
     public ResponseEntity<Customer> getUserByEmailHandler(@PathVariable("email") String email){

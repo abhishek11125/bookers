@@ -21,8 +21,8 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer bookId;
-    @NotBlank(message = "Please provide book image link")
-    private String bookImage;
+//    @NotBlank(message = "Please provide book image link")
+//    private String bookImage;
     @NotBlank(message = "Title can not be blank")
     private String title;
     @NotNull(message = "Quantity can not be null")
@@ -47,13 +47,6 @@ public class Book {
     private double price;
     @JsonIgnore(value = false)
     private String authorName;
-
-    @ManyToOne
-    @JsonIgnore
-    private Customer customer;
-
-    @ManyToOne
-    private Payment payment;
 
     @ManyToOne
     private Order order;

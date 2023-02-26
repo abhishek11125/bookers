@@ -17,10 +17,6 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cartId;
 
-    @OneToOne
-    @JsonIgnore
-    private Customer customer;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private List<Book> book = new ArrayList<>();

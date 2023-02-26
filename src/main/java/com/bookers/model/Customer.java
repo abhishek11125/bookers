@@ -38,7 +38,7 @@ public class Customer {
     @NotBlank(message = "Please provide password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "customer")
+    @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
 
     @NotBlank(message = "Role can not be blank")
@@ -53,6 +53,7 @@ public class Customer {
     private List<Payment> buyerPayments = new ArrayList<>();
 
     @OneToOne
+    @JsonIgnore
     private Order order;
 
 }

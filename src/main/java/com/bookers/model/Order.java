@@ -36,7 +36,4 @@ public class Order {
     @JsonIgnore
     List<Book> books = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "paymentId")
-    private Payment payment;
 }
